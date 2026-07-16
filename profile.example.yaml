@@ -1,0 +1,29 @@
+# Copy this file to profile.yaml and fill in your own values, or just run
+# `python setup.py` and answer the prompts instead.
+
+recipient_email: you@example.com
+
+# Terms to match against paper titles/abstracts (case-insensitive).
+# Any single match is enough to trigger an alert from a priority_journal.
+keywords:
+  - organic semiconductor
+  - charge transport
+  - perovskite
+
+# Extra terms that alone are enough to trigger an alert, but only for
+# flagship_journals - keep this short, it's a much broader net.
+broad_terms:
+  - semiconductor
+
+# Nature/Science-family journals - broadest match (keywords + broad_terms).
+flagship_journals:
+  - Nature
+  - Science
+  - Nature Materials
+  - Nature Communications
+  - Science Advances
+
+# Field-specific top journals (e.g. ACS/RSC/Wiley) - medium match (keywords only).
+priority_journals:
+  - Journal of the American Chemical Society
+  - Advanced Materials
