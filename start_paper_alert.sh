@@ -5,6 +5,12 @@
 set -e
 cd "$(dirname "$0")"
 
+# Apps launched by double-clicking (via Finder/LaunchServices) get a much
+# more limited PATH than an interactive shell, so python3 installed via
+# Homebrew or python.org can be invisible here even though it works fine
+# from a Terminal. Make sure the common install locations are searched.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.pyenv/shims:/usr/bin:/bin:$PATH"
+
 if ! command -v python3 >/dev/null 2>&1; then
     osascript -e 'display alert "Pythonが見つかりません" message "先にPython 3をインストールしてから、もう一度このアプリをダブルクリックしてください。\n\nhttps://www.python.org/downloads/ からダウンロードできます。" buttons {"OK"} default button "OK"'
     exit 1
