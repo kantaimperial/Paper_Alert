@@ -13,6 +13,7 @@ If fso.FileExists(batPath) Then
     shell.Run """" & batPath & """", 0, False
 Else
     MsgBox "start_paper_alert.bat was not found." & vbCrLf & vbCrLf & _
+           "Looked here: " & batPath & vbCrLf & vbCrLf & _
            "Keep this file inside the paper-alert folder - moving or " & _
            "copying it out on its own will break it.", _
            vbExclamation, "Can't start paper-alert"
