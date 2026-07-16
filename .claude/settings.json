@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(pip install *)",
+      "Bash(pip3 install *)",
+      "Bash(pip *)",
+      "Bash(source *)",
+      "Bash(./venv/bin/*)",
+      "Bash(venv/bin/*)",
+      "Bash(git *)",
+      "Bash(mkdir *)",
+      "Bash(find *)",
+      "Bash(mkdir -p /Users/ogawakanta2/Claude_code/paper-alert/logs *)",
+      "Bash(launchctl unload *)",
+      "Bash(launchctl load *)",
+      "Bash(launchctl list *)",
+      "Bash(pmset -g sched)",
+      "Bash(curl -s http://localhost:*)",
+      "WebFetch(domain:ai.google.dev)",
+      "Write(//Users/ogawakanta2/Claude_code/paper-alert/**)",
+      "Edit(//Users/ogawakanta2/Claude_code/paper-alert/**)"
+    ]
+  }
+}

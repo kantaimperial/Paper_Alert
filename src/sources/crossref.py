@@ -54,6 +54,49 @@ def search_journal(
     return papers
 
 
+def search_chemrxiv(keywords: list, date_from: str, date_to: str, tier: int, rows: int = 60) -> list:
+    # ChemRxiv's own API is behind a Cloudflare bot challenge and rejects plain
+    # HTTP requests, but ChemRxiv deposits its preprints in Crossref (DOI
+    # prefix 10.26434, type posted-content), so we query Crossref instead.
+    bibliographic_query = " ".join(keywords)
+    params = {
+        "query.bibliographic": bibliographic_query,
+        "filter": (
+            f"prefix:10.26434,from-posted-date:{date_from},"
+            f"until-posted-date:{date_to},type:posted-content"
+        ),
+        "rows": rows,
+        "mailto": CROSSREF_MAILTO,
+    }
+    resp = requests.get(BASE_URL, params=params, timeout=30)
+    resp.raise_for_status()
+    items = resp.json().get("message", {}).get("items", [])
+
+    papers = []
+    for item in items:
+        title = item.get("title") or [""]
+        authors = [
+            f"{a.get('given', '')} {a.get('family', '')}".strip()
+            for a in item.get("author", [])
+        ]
+        date_parts = item.get("posted", {}).get("date-parts", [[]])[0]
+        published = "-".join(f"{p:02d}" if i else str(p) for i, p in enumerate(date_parts))
+        papers.append(
+            Paper(
+                source="chemrxiv",
+                tier=tier,
+                title=title[0] if title else "",
+                authors=authors,
+                venue="ChemRxiv",
+                published=published,
+                doi=item.get("DOI", ""),
+                url=item.get("URL", ""),
+                abstract=_clean_abstract(item.get("abstract", "")),
+            )
+        )
+    return papers
+
+
 def _clean_abstract(raw: str) -> str:
     # Crossref abstracts are JATS XML; strip tags for a plain-text version.
     import re

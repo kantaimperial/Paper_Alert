@@ -12,6 +12,7 @@ class Paper:
     doi: str = ""
     url: str = ""
     abstract: str = ""
+    relevance: int = 0
 
     def dedup_key(self) -> str:
         if self.doi:

@@ -6,11 +6,11 @@ from src.config import GMAIL_ADDRESS, GMAIL_APP_PASSWORD
 from src.models import Paper
 from src.summarize import summarize_paper
 
-TIER_LABELS = {1: "Tier 1 (Nature / Science)", 2: "Tier 2 (JACS)", 3: "Tier 3 (その他)"}
+TIER_LABELS = {1: "Tier 1 (Nature / Science)", 2: "Tier 2 (JACS)", 3: "Tier 3 (プレプリント: arXiv / ChemRxiv)"}
 
 
-def _paper_block(paper: Paper) -> str:
-    summary = summarize_paper(paper)
+def _paper_block(paper: Paper, language: str = "ja") -> str:
+    summary = summarize_paper(paper, language)
     authors = ", ".join(paper.authors[:5])
     if len(paper.authors) > 5:
         authors += " et al."
@@ -27,7 +27,7 @@ def _paper_block(paper: Paper) -> str:
     return "\n".join(lines) + "\n"
 
 
-def build_digest(papers: list, date_from: str, date_to: str) -> str:
+def build_digest(papers: list, date_from: str, date_to: str, language: str = "ja") -> str:
     lines = [f"論文アラート ({date_from} 〜 {date_to})", f"該当件数: {len(papers)}件", ""]
     for tier in (1, 2, 3):
         tier_papers = [p for p in papers if p.tier == tier]
@@ -36,12 +36,12 @@ def build_digest(papers: list, date_from: str, date_to: str) -> str:
         lines.append(f"--- {TIER_LABELS[tier]} ---")
         lines.append("")
         for paper in tier_papers:
-            lines.append(_paper_block(paper))
+            lines.append(_paper_block(paper, language))
     return "\n".join(lines)
 
 
-def send_alert(papers: list, recipient_email: str, date_from: str, date_to: str) -> None:
-    body = build_digest(papers, date_from, date_to)
+def send_alert(papers: list, recipient_email: str, date_from: str, date_to: str, language: str = "ja") -> None:
+    body = build_digest(papers, date_from, date_to, language)
 
     msg = MIMEMultipart()
     msg["Subject"] = f"[Paper Alert] {len(papers)}件の新着論文 ({date_from} 〜 {date_to})"

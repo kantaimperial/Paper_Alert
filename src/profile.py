@@ -15,6 +15,12 @@ class Profile:
     broad_terms: list = field(default_factory=list)
     flagship_journals: list = field(default_factory=list)
     priority_journals: list = field(default_factory=list)
+    summary_language: str = "ja"
+    include_arxiv: bool = False
+    include_chemrxiv: bool = False
+    max_total_papers: int = 30
+    max_arxiv_papers: int = 15
+    max_chemrxiv_papers: int = 15
 
 
 def load_profile(path: Path = PROFILE_FILE) -> Profile:
@@ -29,6 +35,12 @@ def load_profile(path: Path = PROFILE_FILE) -> Profile:
         broad_terms=data.get("broad_terms", []),
         flagship_journals=data.get("flagship_journals", []),
         priority_journals=data.get("priority_journals", []),
+        summary_language=data.get("summary_language", "ja"),
+        include_arxiv=data.get("include_arxiv", False),
+        include_chemrxiv=data.get("include_chemrxiv", False),
+        max_total_papers=data.get("max_total_papers", 30),
+        max_arxiv_papers=data.get("max_arxiv_papers", 15),
+        max_chemrxiv_papers=data.get("max_chemrxiv_papers", 15),
     )
 
 
@@ -39,5 +51,11 @@ def save_profile(profile: Profile, path: Path = PROFILE_FILE) -> None:
         "broad_terms": profile.broad_terms,
         "flagship_journals": profile.flagship_journals,
         "priority_journals": profile.priority_journals,
+        "summary_language": profile.summary_language,
+        "include_arxiv": profile.include_arxiv,
+        "include_chemrxiv": profile.include_chemrxiv,
+        "max_total_papers": profile.max_total_papers,
+        "max_arxiv_papers": profile.max_arxiv_papers,
+        "max_chemrxiv_papers": profile.max_chemrxiv_papers,
     }
     path.write_text(yaml.dump(data, allow_unicode=True, sort_keys=False))

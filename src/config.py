@@ -10,6 +10,9 @@ GMAIL_ADDRESS = os.environ.get("GMAIL_ADDRESS", "")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
+GEMINI_MODEL_DEFAULT = "gemini-3.1-flash-lite"
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", GEMINI_MODEL_DEFAULT)
+
 STATE_DIR = ROOT_DIR / "state"
 STATE_FILE = STATE_DIR / "last_run.json"
 
