@@ -1,12 +1,14 @@
 @echo off
 rem Sets up the venv/dependencies (first run only) and launches the Streamlit
-rem app in the browser. Meant to be started via "paper-alertを起動.vbs",
-rem but can also be double-clicked or run directly from a command prompt.
+rem app in the browser. Meant to be started via the launcher .vbs file next
+rem to it, but can also be double-clicked or run from a command prompt.
+rem (Kept ASCII-only: the legacy script/console codepage can mis-parse
+rem non-ASCII text and break string literals depending on the system.)
 cd /d "%~dp0"
 
 where python >nul 2>nul
 if errorlevel 1 (
-    powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('先にPython 3をインストールしてから、もう一度このアプリを開いてください。' + [Environment]::NewLine + [Environment]::NewLine + 'https://www.python.org/downloads/ からダウンロードできます。インストール時は「Add python.exe to PATH」にチェックを入れてください。','Pythonが見つかりません') | Out-Null"
+    powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('Please install Python 3 first, then open this app again.' + [Environment]::NewLine + [Environment]::NewLine + 'Download it from https://www.python.org/downloads/ - check Add python.exe to PATH during setup.','Python not found') | Out-Null"
     exit /b 1
 )
 
