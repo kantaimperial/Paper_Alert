@@ -1,4 +1,4 @@
-"""Registers/unregisters the periodic run as a macOS launchd LaunchAgent."""
+"""Registers/unregisters the periodic run as a macOS launchd LaunchAgent (macOS-only)."""
 
 import os
 import plistlib
