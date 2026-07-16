@@ -9,6 +9,7 @@ DEFAULT_FLAGSHIP_JOURNALS = [
     "Science",
     "Nature Materials",
     "Nature Chemistry",
+    "Nature Physics",
     "Nature Energy",
     "Nature Communications",
     "Nature Nanotechnology",
